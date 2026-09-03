@@ -14,7 +14,6 @@ from src.yolo_rgbd_dataset import export_rgbd_segmentation_dataset
 from src.yolo_rgbd_prediction import predict_rgbd_segmentation
 from src.yolo_depth_verified_prediction import predict_depth_verified_segmentation
 from src.vision_predicted_masks import export_predicted_mask_crops
-from src.vision_segmentation_figures import generate_segmentation_figures
 from src.final_vision_pipeline import run_final_vision_pipeline
 
 from src.detection_output import run_detection_export
@@ -53,10 +52,6 @@ from src.vision_multimodal_spatial import (
     export_multimodal_spatial_predictions,
     train_multimodal_spatial_from_splits,
 )
-from src.vision_figures import (
-    generate_quantitative_comparison_figures,
-    generate_vision_figures,
-)
 
 DEFAULT_CONFIG = Path(__file__).resolve().parent / "config" / "paths.yaml"
 
@@ -83,7 +78,6 @@ def build_parser() -> argparse.ArgumentParser:
     actions.add_argument("--predict-rgbd-yolo", action="store_true", help="Run a four-channel YOLO segmentation checkpoint on one aligned RGB-D frame.")
     actions.add_argument("--predict-depth-verified-yolo", action="store_true", help="Generate RGB YOLO proposals and reject only strong metric-depth contradictions.")
     actions.add_argument("--export-predicted-mask-crops", action="store_true", help="Apply YOLO-predicted instance masks to aligned depth crops.")
-    actions.add_argument("--make-segmentation-figures", action="store_true", help="Compare predicted instance masks with Unity masks and create report figures.")
     actions.add_argument("--run-final-vision-pipeline", action="store_true", help="Run the complete resumable final RGB-D vision pipeline from a three-split config.")
     actions.add_argument("--pipeline-ui", action="store_true", help="Open the desktop launcher for the final RGB-D vision pipeline.")
 
@@ -106,8 +100,6 @@ def build_parser() -> argparse.ArgumentParser:
     actions.add_argument("--compare-vision-experiments", action="store_true", help="Compare bbox-feature and crop-image spatial baselines.")
     actions.add_argument("--export-crop-spatial-predictions", action="store_true", help="Export crop spatial model predictions to CSV.")
     actions.add_argument("--export-multimodal-spatial-predictions", action="store_true", help="Export multimodal spatial model predictions to CSV.")
-    actions.add_argument("--make-vision-figures", action="store_true", help="Create report figures from vision prediction outputs.")
-    actions.add_argument("--make-quantitative-figures", action="store_true", help="Create report figures comparing vision experiments.")
 
     conversion = parser.add_argument_group("conversion")
     conversion.add_argument("--dataset", help="Optional Unity dataset folder name/path. Overrides unity_dataset_path in paths.yaml.")
@@ -214,16 +206,6 @@ def build_parser() -> argparse.ArgumentParser:
     prediction.add_argument("--multimodal-spatial-checkpoint", type=Path, help="Multimodal spatial checkpoint path.")
     prediction.add_argument("--multimodal-spatial-predictions-output", type=Path, help="Output CSV for multimodal spatial predictions.")
     prediction.add_argument("--multimodal-spatial-predictions-summary", type=Path, help="Output JSON summary for multimodal spatial prediction errors.")
-    prediction.add_argument("--predictions-csv", type=Path, help="Input prediction CSV for figure generation.")
-    prediction.add_argument("--crop-summary-input", type=Path, help="Input crop spatial summary JSON for training-curve figures.")
-    prediction.add_argument("--comparison-input", type=Path, help="Input experiment comparison JSON for comparison figures.")
-    prediction.add_argument("--figures-output", type=Path, help="Output directory for generated report figures.")
-    prediction.add_argument("--comparison-inputs", nargs="+", type=Path, help="Input experiment comparison JSON files for quantitative figures.")
-    prediction.add_argument("--comparison-labels", nargs="+", help="Optional display labels for --comparison-inputs.")
-    prediction.add_argument("--quantitative-figures-output", type=Path, help="Output directory for quantitative comparison figures.")
-    prediction.add_argument("--ground-truth-crop-labels", type=Path, help="Ground-truth crop CSV for segmentation figure generation.")
-    prediction.add_argument("--predicted-mask-crop-labels", type=Path, help="Predicted-mask crop CSV for segmentation figure generation.")
-    prediction.add_argument("--segmentation-figures-output", type=Path, help="Output directory for segmentation metrics and figures.")
 
     return parser
 
@@ -959,68 +941,11 @@ def main() -> None:
             print(f"{key}: {value}")
 
 
-    if args.make_vision_figures:
-        if args.predictions_csv is None:
-            raise ValueError("--predictions-csv is required for --make-vision-figures")
-
-        output_dir = args.figures_output
-        if output_dir is None:
-            output_dir = args.predictions_csv.parent / "figures"
-
-        outputs = generate_vision_figures(
-            predictions_csv=args.predictions_csv,
-            output_dir=output_dir,
-            crop_summary_path=args.crop_summary_input,
-            comparison_path=args.comparison_input,
-        )
-
-        print(f"Generated {len(outputs)} vision figure(s):")
-        for output in outputs:
-            print(output)
-
-
-    if args.make_quantitative_figures:
-        if args.comparison_inputs is None:
-            raise ValueError("--comparison-inputs is required for --make-quantitative-figures")
-
-        output_dir = args.quantitative_figures_output
-        if output_dir is None:
-            output_dir = Path("reports/figures/quantitative_comparison")
-
-        outputs = generate_quantitative_comparison_figures(
-            comparison_paths=args.comparison_inputs,
-            output_dir=output_dir,
-            labels=args.comparison_labels,
-        )
-
-        print(f"Generated {len(outputs)} quantitative comparison figure(s):")
-        for output in outputs:
-            print(output)
-
-    if args.make_segmentation_figures:
-        if args.ground_truth_crop_labels is None:
-            raise ValueError("--ground-truth-crop-labels is required for --make-segmentation-figures")
-        if args.predicted_mask_crop_labels is None:
-            raise ValueError("--predicted-mask-crop-labels is required for --make-segmentation-figures")
-        output_dir = args.segmentation_figures_output
-        if output_dir is None:
-            output_dir = Path("reports/figures/segmentation")
-        outputs = generate_segmentation_figures(
-            ground_truth_crop_labels=args.ground_truth_crop_labels,
-            predicted_crop_labels=args.predicted_mask_crop_labels,
-            output_dir=output_dir,
-        )
-        print(f"Generated {len(outputs)} segmentation artifact(s):")
-        for output in outputs:
-            print(output)
-
-
     if not (
         args.yolo_conversion
         or args.export_yolo_segmentation
         or args.export_rgbd_yolo_segmentation
         or args.export_predicted_mask_crops
-        or args.make_segmentation_figures
         or args.run_final_vision_pipeline
         or args.pipeline_ui
         or args.train_yolo
@@ -1047,8 +972,6 @@ def main() -> None:
         or args.compare_vision_experiments
         or args.export_crop_spatial_predictions
         or args.export_multimodal_spatial_predictions
-        or args.make_vision_figures
-        or args.make_quantitative_figures
     ):
         parser.print_help()
 

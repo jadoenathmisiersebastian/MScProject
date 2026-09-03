@@ -1,1 +1,1 @@
-"""Object detection pipeline modules for the MastersProject workspace."""
+"""Modules for the synthetic RGB-D perception pipeline."""

@@ -20,21 +20,9 @@ from src.vision_predicted_masks import (
     rasterize_polygon_crop,
     select_prediction_index,
 )
-from src.vision_segmentation_figures import binary_mask_metrics
 
 
 class YoloSegmentationDatasetTests(unittest.TestCase):
-    def test_binary_mask_metrics(self):
-        truth = np.asarray([[1, 1], [0, 0]], dtype=bool)
-        prediction = np.asarray([[1, 0], [1, 0]], dtype=bool)
-
-        metrics = binary_mask_metrics(truth, prediction)
-
-        self.assertAlmostEqual(metrics["iou"], 1.0 / 3.0)
-        self.assertAlmostEqual(metrics["dice"], 0.5)
-        self.assertAlmostEqual(metrics["precision"], 0.5)
-        self.assertAlmostEqual(metrics["recall"], 0.5)
-
     def test_predicted_bbox_is_rasterized_in_crop_coordinates(self):
         mask = rasterize_bbox_crop(
             bbox_xyxy=np.asarray([12.2, 22.2, 16.8, 25.8]),

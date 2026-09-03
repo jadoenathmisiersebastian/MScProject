@@ -67,7 +67,7 @@ public static class GeneratedTargetMaterialPackCreator
 
     private static readonly MaterialSpec[] MaterialSpecs =
     {
-        // Opaque coated card and plastic-coated drink cartons.
+        // Drink-carton materials combine coated card finishes with printed patterns.
         Spec("DrinkCartons", "DrinkCarton_DairyBlue", 232, 231, 220, 56, 105, 154, 31, 53, 79, 0.38f, 0.08f, PatternType.Carton, 101),
         Spec("DrinkCartons", "DrinkCarton_FruitOrange", 239, 224, 185, 215, 117, 42, 69, 116, 64, 0.34f, 0.06f, PatternType.Carton, 102),
         Spec("DrinkCartons", "DrinkCarton_NaturalGreen", 220, 219, 191, 76, 126, 79, 83, 61, 42, 0.28f, 0.04f, PatternType.Carton, 103),
@@ -75,8 +75,7 @@ public static class GeneratedTargetMaterialPackCreator
         Spec("DrinkCartons", "DrinkCarton_CocoaCream", 224, 205, 175, 105, 61, 39, 177, 54, 43, 0.33f, 0.06f, PatternType.Carton, 105),
         Spec("DrinkCartons", "DrinkCarton_KraftBlue", 170, 132, 84, 44, 91, 132, 226, 216, 189, 0.22f, 0.02f, PatternType.Kraft, 106),
 
-        // Hard glass remains opaque for reliable labels and depth, but uses a
-        // high-smoothness coated finish. PET options are slightly rougher.
+        // Bottle materials cover tinted glass and PET with distinct surface finishes.
         Spec("Bottles", "Bottle_AmberHardGlass", 76, 35, 16, 137, 72, 28, 224, 201, 151, 0.94f, 0.82f, PatternType.BottleGlass, 201, true, 0.80f),
         Spec("Bottles", "Bottle_GreenHardGlass", 18, 67, 43, 48, 105, 65, 218, 211, 169, 0.94f, 0.82f, PatternType.BottleGlass, 202, true, 0.78f),
         Spec("Bottles", "Bottle_BlueHardGlass", 24, 65, 102, 58, 113, 143, 224, 224, 204, 0.93f, 0.78f, PatternType.BottleGlass, 203, true, 0.74f),
@@ -86,13 +85,13 @@ public static class GeneratedTargetMaterialPackCreator
         Spec("Bottles", "Bottle_AquaPET", 41, 132, 137, 96, 181, 171, 229, 232, 213, 0.68f, 0.22f, PatternType.BottlePlastic, 207),
         Spec("Bottles", "Bottle_RedPET", 156, 39, 43, 203, 82, 67, 237, 220, 174, 0.66f, 0.20f, PatternType.BottlePlastic, 208),
 
-        // A restrained tint range for transparent drinking glasses.
+        // Drinking-glass materials use a restrained range of transparent tints.
         Spec("Glasses", "Glass_Clear", 221, 230, 228, 244, 246, 240, 186, 208, 207, 0.96f, 0.82f, PatternType.DrinkingGlass, 301, true, 0.22f),
         Spec("Glasses", "Glass_Smoke", 84, 91, 94, 146, 151, 149, 213, 217, 211, 0.95f, 0.78f, PatternType.DrinkingGlass, 302, true, 0.30f),
         Spec("Glasses", "Glass_PaleBlue", 116, 169, 188, 192, 217, 218, 231, 237, 228, 0.95f, 0.80f, PatternType.DrinkingGlass, 303, true, 0.27f),
         Spec("Glasses", "Glass_PaleGreen", 112, 163, 132, 190, 212, 187, 232, 232, 213, 0.95f, 0.80f, PatternType.DrinkingGlass, 304, true, 0.27f),
 
-        // Opaque card food packaging with varied print layouts.
+        // Food-box materials vary print layout across opaque card finishes.
         Spec("FoodBoxes", "FoodBox_CerealBlue", 47, 91, 143, 226, 207, 112, 238, 231, 211, 0.38f, 0.08f, PatternType.FoodBox, 401),
         Spec("FoodBoxes", "FoodBox_CerealYellow", 222, 171, 50, 86, 58, 42, 190, 47, 41, 0.36f, 0.07f, PatternType.FoodBox, 402),
         Spec("FoodBoxes", "FoodBox_PastaRed", 174, 40, 39, 233, 218, 179, 51, 80, 113, 0.40f, 0.09f, PatternType.FoodBox, 403),

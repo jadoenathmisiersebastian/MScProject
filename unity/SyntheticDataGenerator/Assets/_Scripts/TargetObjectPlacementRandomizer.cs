@@ -5,39 +5,21 @@ using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
 using UnityEngine.Perception.Randomization.Samplers;
 
-/// <summary>
-/// Spawns foreground objects above a table and lets physics handle stacking
-/// </summary>
 [Serializable]
 [AddRandomizerMenu("Custom/Foreground Placement Randomizer")]
 public class ForegroundPlacementRandomizer : Randomizer
 {
-    /// <summary>
-    /// The table surface (spawn area reference)
-    /// </summary>
     public Transform table;
 
-    /// <summary>
-    /// Size of table area (X and Z)
-    /// </summary>
     public Vector2 tableSize = new Vector2(2f, 2f);
 
-    /// <summary>
-    /// Height above table to spawn objects
-    /// </summary>
     public float spawnHeight = 2f;
 
-    /// <summary>
-    /// Number of objects
-    /// </summary>
     public IntegerParameter objectCount = new IntegerParameter
     {
         value = new ConstantSampler(5)
     };
 
-    /// <summary>
-    /// Prefabs
-    /// </summary>
     public CategoricalParameter<GameObject> prefabs;
 
     GameObject m_Container;
@@ -58,7 +40,6 @@ public class ForegroundPlacementRandomizer : Randomizer
 
             var instance = GameObject.Instantiate(prefab, m_Container.transform);
 
-            // 🔥 Random position within table bounds
             float x = UnityEngine.Random.Range(-tableSize.x / 2, tableSize.x / 2);
             float z = UnityEngine.Random.Range(-tableSize.y / 2, tableSize.y / 2);
 
@@ -66,18 +47,15 @@ public class ForegroundPlacementRandomizer : Randomizer
 
             instance.transform.position = spawnPos;
 
-            // Random discrete resting pose plus random yaw. This avoids odd angled poses
-            // while allowing upright, upside-down, and side-resting objects.
+            // Restrict rotation to stable resting faces, then vary yaw.
             instance.transform.rotation = GetRandomSpawnRotation();
         }
 
-        // 🔥 Let physics settle before capture
         scenario.StartCoroutine(WaitForPhysics());
     }
 
     IEnumerator WaitForPhysics()
     {
-        // Wait a few frames for objects to fall & settle
         yield return new WaitForSeconds(1.5f);
     }
 

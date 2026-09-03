@@ -69,12 +69,10 @@ def compare_vision_experiments(
             "dimensions_mae_per_axis_m": dimensions_metrics["mae_per_axis_m"],
         },
         "candidate_model": candidate_metrics,
-        # Legacy key retained for existing figure generation scripts.
-        "crop_image_baseline": candidate_metrics,
     }
 
     bbox_distance = comparison["bbox_feature_baseline"]["distance_mae_m"]
-    crop_distance = comparison["crop_image_baseline"]["distance_mae_m"]
+    crop_distance = comparison["candidate_model"]["distance_mae_m"]
 
     comparison["distance_mae_delta_m"] = crop_distance - bbox_distance
     comparison["distance_mae_improved_by_crop"] = crop_distance < bbox_distance

@@ -190,7 +190,7 @@ python -m unittest discover -s tests
 ```
 
 Use `python main.py --help` for the individual conversion, training,
-prediction, geometry and figure-generation commands.
+prediction, geometry and evaluation commands.
 
 ## iPhone RGB-D capture
 

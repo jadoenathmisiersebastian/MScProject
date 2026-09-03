@@ -19,11 +19,6 @@ public class HandProxyController : MonoBehaviour
 
     public HandProxyContactGrabber contactGrabber;
 
-    // [Header("Manual Test Controls")]
-    // public bool enableManualControls = true;
-    // public float apertureStepSpeed = 1.5f;
-    // public float wristRollSpeed = 90f;
-
     private Vector3 initialWristLocalPosition;
     private Quaternion initialWristLocalRotation;
 
@@ -57,56 +52,6 @@ public class HandProxyController : MonoBehaviour
             contactGrabber.SetClosed(true);
         }
     }
-
-    // private void Update()
-    // {
-    //     if (enableManualControls)
-    //     {
-    //         float apertureInput = 0f;
-
-    //         if (Input.GetKey(KeyCode.O))
-    //         {
-    //             apertureInput += 1f;
-    //         }
-
-    //         if (Input.GetKey(KeyCode.C))
-    //         {
-    //             apertureInput -= 1f;
-    //         }
-
-    //         if (Mathf.Abs(apertureInput) > 0f)
-    //         {
-    //             currentAperture += apertureInput * apertureStepSpeed * Time.deltaTime;
-    //             currentAperture = Mathf.Clamp01(currentAperture);
-    //         }
-
-    //         float rollInput = 0f;
-
-    //         if (Input.GetKey(KeyCode.Q))
-    //         {
-    //             rollInput += 1f;
-    //         }
-
-    //         if (Input.GetKey(KeyCode.E))
-    //         {
-    //             rollInput -= 1f;
-    //         }
-
-    //         if (Mathf.Abs(rollInput) > 0f)
-    //         {
-    //             currentWristRollDegrees += rollInput * wristRollSpeed * Time.deltaTime;
-    //         }
-
-    //         if (Input.GetKeyDown(KeyCode.R))
-    //         {
-    //             ResetHand();
-    //         }
-    //     }
-
-    //     SetAperture(currentAperture);
-    //     SetWristRoll(currentWristRollDegrees);
-    // }
-
 
     private void Update()
     {

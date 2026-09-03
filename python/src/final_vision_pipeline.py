@@ -142,7 +142,6 @@ def build_final_pipeline_stages(
     }
 
     baseline_report = root / "datasets" / "vision_labels" / f"vision_baseline_report_{name}.json"
-    figure_root = root / "reports" / "figures"
     stages: list[PipelineStage] = []
 
     def command(*arguments: object) -> list[str]:
@@ -334,51 +333,6 @@ def build_final_pipeline_stages(
             ),
             expected_outputs=(residual_runs[method] / "experiment_comparison.json",),
         ))
-
-    stages.append(PipelineStage(
-        name="segmentation_figures",
-        command=command(
-            "--make-segmentation-figures",
-            "--ground-truth-crop-labels", crops["test"] / "crop_labels.csv",
-            "--predicted-mask-crop-labels", predicted_crops["test"] / "crop_labels.csv",
-            "--segmentation-figures-output", figure_root / f"{name}_predicted_segmentation_test",
-        ),
-        expected_outputs=(
-            figure_root / f"{name}_predicted_segmentation_test" / "mask_metrics.json",
-            figure_root / f"{name}_predicted_segmentation_test" / "predicted_mask_examples.png",
-        ),
-    ))
-
-    stages.append(PipelineStage(
-        name="predicted_mask_spatial_figures",
-        command=command(
-            "--make-vision-figures",
-            "--predictions-csv", residual_predictions["predicted_masks"] / "predictions.csv",
-            "--crop-summary-input", residual_runs["predicted_masks"] / "summary.json",
-            "--comparison-input", residual_runs["predicted_masks"] / "experiment_comparison.json",
-            "--figures-output", figure_root / f"{name}_geometry_predicted_masks",
-        ),
-        expected_outputs=(
-            figure_root / f"{name}_geometry_predicted_masks" / "true_vs_pred_distance.png",
-            figure_root / f"{name}_geometry_predicted_masks" / "dimension_true_vs_pred.png",
-        ),
-    ))
-
-    stages.append(PipelineStage(
-        name="three_way_comparison_figures",
-        command=command(
-            "--make-quantitative-figures",
-            "--comparison-inputs",
-            residual_runs["oracle"] / "experiment_comparison.json",
-            residual_runs["predicted_masks"] / "experiment_comparison.json",
-            residual_runs["predicted_bbox"] / "experiment_comparison.json",
-            "--comparison-labels", "Oracle Mask", "Predicted Mask", "Predicted Bbox",
-            "--quantitative-figures-output", figure_root / f"{name}_mask_realism_comparison",
-        ),
-        expected_outputs=(
-            figure_root / f"{name}_mask_realism_comparison" / "architecture_error_comparison.png",
-        ),
-    ))
 
     return stages
 

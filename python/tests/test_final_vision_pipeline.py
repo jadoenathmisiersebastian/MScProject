@@ -48,7 +48,7 @@ class FinalVisionPipelineTests(unittest.TestCase):
             self.assertIn("geometry_predicted_masks_test", names)
             self.assertIn("geometry_predicted_bbox_test", names)
             self.assertIn("train_residual_predicted_masks", names)
-            self.assertIn("three_way_comparison_figures", names)
+            self.assertIn("comparison_predicted_bbox", names)
 
             audit_train = next(stage for stage in stages if stage.name == "audit_train")
             self.assertEqual(audit_train.command[0], "python-test")

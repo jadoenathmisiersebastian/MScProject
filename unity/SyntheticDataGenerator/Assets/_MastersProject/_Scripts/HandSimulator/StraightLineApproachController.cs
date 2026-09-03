@@ -54,7 +54,6 @@ public class StraightLineApproachController : MonoBehaviour
 
     private Vector3 GetApproachDirection()
     {
-        // First version: approach from camera/front side toward positive Z.
         return Vector3.forward;
     }
 

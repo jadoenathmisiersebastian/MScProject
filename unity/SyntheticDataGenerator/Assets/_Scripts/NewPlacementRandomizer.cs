@@ -12,10 +12,9 @@ public class NewPlacementRandomizer : Randomizer
 
     public Vector3Parameter positionDistribution = new Vector3Parameter
     {
-        x = new UniformSampler(-2f, 2f),   // width
-        y = new UniformSampler(0f, 2f),    // height
-        //z = new ConstantSampler(0f)        // flat wall
-        z = new UniformSampler(0f, 2f)        // flat wall
+        x = new UniformSampler(-2f, 2f),
+        y = new UniformSampler(0f, 2f),
+        z = new UniformSampler(0f, 2f)
 
     };
 
@@ -53,10 +52,9 @@ public class NewPlacementRandomizer : Randomizer
 
             Vector3 localPos = positionDistribution.Sample();
 
-            // ✅ Correct placement respecting wall rotation
+            // Apply placement in the selected spawn centre's local frame.
             instance.transform.position = center.TransformPoint(localPos);
 
-            // ✅ Correct orientation
             instance.transform.rotation =
                 center.rotation * Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
         }
