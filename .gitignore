@@ -1,0 +1,62 @@
+# macOS
+.DS_Store
+
+# Python
+python/.venv/
+python/venv/
+python/**/__pycache__/
+python/**/*.py[cod]
+python/.pytest_cache/
+python/.mypy_cache/
+python/.ruff_cache/
+
+# Generated datasets, models, predictions and reports
+python/datasets/
+python/YOLO/
+python/predictions/
+python/reports/
+*.pt
+*.pth
+*.onnx
+
+# Unity generated state
+unity/**/[Ll]ibrary/
+unity/**/[Tt]emp/
+unity/**/[Oo]bj/
+unity/**/[Bb]uild/
+unity/**/[Bb]uilds/
+unity/**/[Ll]ogs/
+unity/**/[Uu]serSettings/
+unity/**/*.csproj
+unity/**/*.sln
+unity/**/*.slnx
+unity/**/*.pidb
+unity/**/*.booproj
+unity/**/*.svd
+
+# Third-party Unity content restored locally during setup
+unity/SyntheticDataGenerator/Assets/Aquaset/
+unity/SyntheticDataGenerator/Assets/Aquaset.meta
+unity/SyntheticDataGenerator/Assets/Brick Project Studio/
+unity/SyntheticDataGenerator/Assets/Brick Project Studio.meta
+unity/SyntheticDataGenerator/Assets/Kharnyx/
+unity/SyntheticDataGenerator/Assets/Kharnyx.meta
+unity/SyntheticDataGenerator/Assets/Mugs, Bowls and Plates/
+unity/SyntheticDataGenerator/Assets/Mugs, Bowls and Plates.meta
+unity/SyntheticDataGenerator/Assets/YughuesFreeFlooringMaterials/
+unity/SyntheticDataGenerator/Assets/YughuesFreeFlooringMaterials.meta
+unity/SyntheticDataGenerator/Assets/Samples/
+unity/SyntheticDataGenerator/Assets/Samples.meta
+
+# Xcode generated state and signing data
+ios/**/DerivedData/
+ios/**/xcuserdata/
+ios/**/*.xcuserstate
+ios/**/*.xcscmblueprint
+ios/**/*.xccheckout
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~

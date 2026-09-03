@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated MSc project."
+title: "Synthetic RGB-D Perception for Prosthetic Grasp Planning"
+type: software
+authors:
+  - family-names: "Jadoenathmisier"
+    given-names: "Sebastian"
+    affiliation: "Imperial College London"
+version: 1.0.0
+date-released: 2026-09-03

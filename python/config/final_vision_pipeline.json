@@ -1,0 +1,17 @@
+{
+  "pipeline_name": "c3d_final_5_f",
+  "raw_splits": {
+    "train": "datasets/vision_raw/C3D_5000_train_f",
+    "val": "datasets/vision_raw/C3D_500_val_f",
+    "test": "datasets/vision_raw/C3D_500_test_f"
+  },
+  "segmentation_model": "yolov8n-seg.pt",
+  "segmentation_epochs": 20,
+  "segmentation_batch": 8,
+  "segmentation_confidence": 0.25,
+  "image_size": 640,
+  "device": "mps",
+  "residual_epochs": 100,
+  "residual_batch": 64,
+  "residual_image_size": 128
+}

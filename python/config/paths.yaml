@@ -1,0 +1,35 @@
+project_root: .
+project_code: .
+
+# Parent folder containing generated Unity datasets such as solo, solo_24, multi_1, etc.
+unity_output_root: datasets/vision_raw
+
+# Current Unity dataset to convert. Change this when Unity generates a new output folder.
+# This can be an absolute path, or you can use --dataset on the command line to override it.
+unity_dataset_path: datasets/vision_raw/example
+
+# YOLO dataset and experiment outputs
+yolo_dataset_output: datasets/tablesim_yolo
+yolo_runs_output: YOLO/runs/detect
+predictions_output: predictions
+
+# Training defaults
+base_model: yolov8n.pt
+run_name: train1
+epochs: 50
+image_size: 640
+batch: 8
+
+# Used by prediction. Update this after each training run if the run name changes.
+model_weights: YOLO/runs/detect/example/weights/best.pt
+
+# YOLO class IDs must be zero-based and stable.
+classes:
+  drink_carton: 0
+  bottle: 1
+  food_box: 2
+  glass: 3
+
+# Labels listed here are ignored if they appear in Unity annotations.
+ignore_labels:
+  - Character
